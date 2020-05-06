@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <title>Web Test Dice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      #page {
+        transition: all 300ms ease;
+        text-align: center;
+        background-color: #202020;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1 {
+        font-weight: normal;
+        font-size: 40px;
+        margin: 20px;
+      }
+
+      .scene {
+        width: 200px;
+        height: 200px;
+        perspective: 600px;
+        transform: scale(1.5);
+        margin: 100px auto;
+      }
+
+      .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: translateZ(-100px);
+        transition: transform 1s;
+      }
+
+      .cube__face {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+      }
+
+      .cube__face img {
+        max-width: 80%;
+        max-height: 80%;
+      }
+
+      .android.cube__face {
+        background: #4caf50;
+      }
+      .ios.cube__face {
+        background: #f8bbd0;
+      }
+      .windows.cube__face {
+        background: #00aff0;
+      }
+      .mac.cube__face {
+        background: #f1f1f1;
+      }
+      .firefox.cube__face {
+        background: #6a61e8;
+      }
+      .chrome.cube__face {
+        background: #4086f4;
+      }
+      .edge.cube__face {
+        background: #ffffff;
+      }
+      .safari.cube__face {
+        background: #dd444a;
+      }
+
+      .cube__face--front {
+        transform: rotateY(0deg) translateZ(100px);
+      }
+      .cube__face--right {
+        transform: rotateY(90deg) translateZ(100px);
+      }
+      .cube__face--back {
+        transform: rotateY(180deg) translateZ(100px);
+      }
+      .cube__face--left {
+        transform: rotateY(-90deg) translateZ(100px);
+      }
+      .cube__face--top {
+        transform: rotateX(90deg) translateZ(100px);
+      }
+      .cube__face--bottom {
+        transform: rotateX(-90deg) translateZ(100px);
+      }
+
+      .cube.show-front,
+      .cube.android,
+      .cube.chrome {
+        transform: translateZ(-100px) rotateY(0deg);
+      }
+      .cube.show-right,
+      .cube.windows,
+      .cube.edge {
+        transform: translateZ(-100px) rotateY(-90deg);
+      }
+      .cube.show-back,
+      .cube.mac,
+      .cube.firefox {
+        transform: translateZ(-100px) rotateY(-180deg);
+      }
+      .cube.show-left,
+      .cube.ios,
+      .cube.safari {
+        transform: translateZ(-100px) rotateY(90deg);
+      }
+      .cube.show-top {
+        transform: translateZ(-100px) rotateX(-90deg);
+      }
+      .cube.show-bottom {
+        transform: translateZ(-100px) rotateX(90deg);
+      }
+
+      #roll {
+        margin: 10px auto;
+        width: 200px;
+        height: 100px;
+        border: 3px solid white;
+        border-radius: 10px;
+        font-size: 30px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body id="page">
+    <h1>Web Test Dice</h1>
+
+    <div class="scene">
+      <div class="cube show-top" id="dice-browsers">
+        <div class="cube__face cube__face--front chrome">
+          <img
+            alt="chrome"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/1200px-Google_Chrome_icon_%28September_2014%29.svg.png"
+          />
+        </div>
+        <div class="cube__face cube__face--back firefox">
+          <img
+            alt="firefox"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png"
+          />
+        </div>
+        <div class="cube__face cube__face--right edge">
+          <img
+            alt="edge"
+            src="https://cdn.vox-cdn.com/thumbor/0n6dqQfk9MuOBSiM39Pog2Bw39Y=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19341372/microsoftedgenewlogo.jpg"
+          />
+        </div>
+        <div class="cube__face cube__face--left safari">
+          <img
+            alt="safari"
+            src="https://www.fixyourbrowser.com/wp-content/uploads/2020/01/safari-logo.png"
+          />
+        </div>
+        <div class="cube__face cube__face--top"></div>
+        <div class="cube__face cube__face--bottom"></div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="scene">
+      <div class="cube show-top" id="dice-devices">
+        <div class="cube__face cube__face--front android">
+          <img
+            alt="android"
+            src="https://pngimage.net/wp-content/uploads/2018/05/android-logo-white-png-9.png"
+          />
+        </div>
+        <div class="cube__face cube__face--back mac">
+          <img
+            alt="mac"
+            src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+          />
+        </div>
+        <div class="cube__face cube__face--right windows">
+          <img alt="windows" src="https://logodix.com/logo/1042145.png" />
+        </div>
+        <div class="cube__face cube__face--left ios">
+          <img
+            alt="ios"
+            src="https://cdn.freebiesupply.com/logos/thumbs/2x/apple-ios-logo.png"
+          />
+        </div>
+        <div class="cube__face cube__face--top"></div>
+          <div class="cube__face cube__face--bottom"></div>
+      </div>
+    </div>
+
+    <button id="roll">Roll!</button>
+
+    <script>
+      const combinations = {
+        windows: ['chrome', 'edge', 'firefox'],
+        android: ['chrome', 'firefox'],
+        mac: ['chrome', 'safari', 'firefox'],
+        ios: ['chrome', 'safari', 'firefox'],
+      };
+      const browsers = ['chrome', 'edge', 'firefox', 'safari'];
+      const devices = ['windows', 'android', 'mac', 'ios'];
+
+      const getRandom = (arr) => {
+        return arr[Math.floor(Math.random() * arr.length)];
+      };
+
+      const getRandomBrowserAndDevice = () => {
+        const device = getRandom(
+          Object.keys(combinations).filter((k) => combinations[k].length > 0),
+        );
+        const browser = getRandom(combinations[device]);
+        return { device, browser };
+      };
+
+      const rollDice = () => {
+        const { device, browser } = getRandomBrowserAndDevice();
+        const browserColor = window.getComputedStyle(
+          document.querySelector(`.${browser}.cube__face`),
+        ).backgroundColor;
+        const deviceColor = window.getComputedStyle(
+          document.querySelector(`.${device}.cube__face`),
+        ).backgroundColor;
+
+        // document.getElementById("dice-devices").classList = "cube show-bottom"
+        // document.getElementById("dice-browsers").classList = "cube show-top"
+
+        // setTimeout(() => {
+        document.getElementById('dice-devices').classList = 'cube ' + device;
+        document.getElementById('dice-browsers').classList = 'cube ' + browser;
+
+        document.getElementById(
+          'page',
+        ).style.background = `linear-gradient(${deviceColor} 20%, ${browserColor} 80%)`;
+        // }, 1000);
+      }
+
+      window.document.getElementById('roll').onclick = rollDice()
+      window.document.addEventListener("click", rollDice)
+    </script>
+  </body>
+</html>
