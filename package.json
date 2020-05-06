@@ -1,0 +1,12 @@
+{
+  "name": "webtestdice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "npx firebase deploy"
+  },
+  "devDependencies": {
+    "firebase-tools": "^8.2.0"
+  }
+}
